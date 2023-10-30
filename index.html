@@ -1,0 +1,1681 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        #map {
+            width: 1214px;
+            height: 724px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/WorldMap_0.js"></script>
+        <script src="data/Route_ORS_2.js"></script>
+        <script src="data/MiraBhayanderPilotBhayanderStnwtoThaneEStops_3.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[19.128903326666855,72.74091089031974],[19.348681763001725,73.10984643718659]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_WorldMap_0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['iso_a2'] !== null ? autolinker.link(feature.properties['iso_a2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FIPS_10_'] !== null ? autolinker.link(feature.properties['FIPS_10_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ISO_A3'] !== null ? autolinker.link(feature.properties['ISO_A3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WB_A2'] !== null ? autolinker.link(feature.properties['WB_A2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WB_A3'] !== null ? autolinker.link(feature.properties['WB_A3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_WorldMap_0_0() {
+            return {
+                pane: 'pane_WorldMap_0',
+                opacity: 1,
+                color: 'rgba(119,116,104,0.6039215686274509)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,220,202,0.6039215686274509)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_WorldMap_0');
+        map.getPane('pane_WorldMap_0').style.zIndex = 400;
+        map.getPane('pane_WorldMap_0').style['mix-blend-mode'] = 'normal';
+        var layer_WorldMap_0 = new L.geoJson(json_WorldMap_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_WorldMap_0',
+            layerName: 'layer_WorldMap_0',
+            pane: 'pane_WorldMap_0',
+            onEachFeature: pop_WorldMap_0,
+            style: style_WorldMap_0_0,
+        });
+        bounds_group.addLayer(layer_WorldMap_0);
+        map.addLayer(layer_WorldMap_0);
+        map.createPane('pane_OpenStreetMap_1');
+        map.getPane('pane_OpenStreetMap_1').style.zIndex = 401;
+        var layer_OpenStreetMap_1 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMap_1',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMap_1;
+        map.addLayer(layer_OpenStreetMap_1);
+        function pop_Route_ORS_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>DIST_KM</strong><br />' + (feature.properties['DIST_KM'] !== null ? autolinker.link(feature.properties['DIST_KM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DURATION_H</th>\
+                        <td>' + (feature.properties['DURATION_H'] !== null ? autolinker.link(feature.properties['DURATION_H'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PROFILE</th>\
+                        <td>' + (feature.properties['PROFILE'] !== null ? autolinker.link(feature.properties['PROFILE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PREF</th>\
+                        <td>' + (feature.properties['PREF'] !== null ? autolinker.link(feature.properties['PREF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">OPTIONS</th>\
+                        <td>' + (feature.properties['OPTIONS'] !== null ? autolinker.link(feature.properties['OPTIONS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FROM_ID</th>\
+                        <td>' + (feature.properties['FROM_ID'] !== null ? autolinker.link(feature.properties['FROM_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TO_ID</th>\
+                        <td>' + (feature.properties['TO_ID'] !== null ? autolinker.link(feature.properties['TO_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Route_ORS_2_0() {
+            return {
+                pane: 'pane_Route_ORS_2',
+                opacity: 1,
+                color: 'rgba(227,26,28,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 7.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Route_ORS_2');
+        map.getPane('pane_Route_ORS_2').style.zIndex = 402;
+        map.getPane('pane_Route_ORS_2').style['mix-blend-mode'] = 'normal';
+        var layer_Route_ORS_2 = new L.geoJson(json_Route_ORS_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Route_ORS_2',
+            layerName: 'layer_Route_ORS_2',
+            pane: 'pane_Route_ORS_2',
+            onEachFeature: pop_Route_ORS_2,
+            style: style_Route_ORS_2_0,
+        });
+        bounds_group.addLayer(layer_Route_ORS_2);
+        map.addLayer(layer_Route_ORS_2);
+        function pop_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>name</strong><br />' + (feature.properties['name'] !== null ? autolinker.link(feature.properties['name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">description</th>\
+                        <td>' + (feature.properties['description'] !== null ? autolinker.link(feature.properties['description'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3_0() {
+            return {
+                pane: 'pane_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,180,60,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3');
+        map.getPane('pane_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3').style.zIndex = 403;
+        map.getPane('pane_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3').style['mix-blend-mode'] = 'normal';
+        var layer_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3 = new L.geoJson(json_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3',
+            layerName: 'layer_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3',
+            pane: 'pane_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3',
+            onEachFeature: pop_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3);
+        map.addLayer(layer_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/MiraBhayanderPilotBhayanderStnwtoThaneEStops_3.png" /> Mira Bhayander Pilot- Bhayander Stn w to Thane E Stops': layer_MiraBhayanderPilotBhayanderStnwtoThaneEStops_3,'<img src="legend/Route_ORS_2.png" /> Route_ORS': layer_Route_ORS_2,"OpenStreetMap": layer_OpenStreetMap_1,'<img src="legend/WorldMap_0.png" /> World Map': layer_WorldMap_0,}).addTo(map);
+        setBounds();
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"DURATION_H": "real","DIST_KM": "real","PROFILE": "str","WB_A3": "str","description": "str","FROM_ID": "str","WB_A2": "str","NAME": "str","FIPS_10_": "str","name": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_DURATION_H = document.createElement("div");
+            div_DURATION_H.id = "div_DURATION_H";
+            div_DURATION_H.className = "slider";
+            document.getElementById("menu").appendChild(div_DURATION_H);
+            var lab_DURATION_H = document.createElement('div');
+            lab_DURATION_H.innerHTML  = 'DURATION_H: <span id="val_DURATION_H"></span>';
+            lab_DURATION_H.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_DURATION_H);
+            var reset_DURATION_H = document.createElement('div');
+            reset_DURATION_H.innerHTML = 'clear filter';
+            reset_DURATION_H.className = 'filterlabel';
+            lab_DURATION_H.className = 'filterlabel';
+            reset_DURATION_H.onclick = function() {
+                sel_DURATION_H.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_DURATION_H);
+            var sel_DURATION_H = document.getElementById('div_DURATION_H');
+            noUiSlider.create(sel_DURATION_H, {
+                connect: true,
+                start: [0.681, 0.681],
+                range: {
+                min: 0.681,
+                max: 0.681
+                }
+            });
+            sel_DURATION_H.noUiSlider.on('update', function (values) {
+            val_DURATION_H = document.getElementById('val_DURATION_H');
+            val_DURATION_H.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_DIST_KM = document.createElement("div");
+            div_DIST_KM.id = "div_DIST_KM";
+            div_DIST_KM.className = "slider";
+            document.getElementById("menu").appendChild(div_DIST_KM);
+            var lab_DIST_KM = document.createElement('div');
+            lab_DIST_KM.innerHTML  = 'DIST_KM: <span id="val_DIST_KM"></span>';
+            lab_DIST_KM.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_DIST_KM);
+            var reset_DIST_KM = document.createElement('div');
+            reset_DIST_KM.innerHTML = 'clear filter';
+            reset_DIST_KM.className = 'filterlabel';
+            lab_DIST_KM.className = 'filterlabel';
+            reset_DIST_KM.onclick = function() {
+                sel_DIST_KM.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_DIST_KM);
+            var sel_DIST_KM = document.getElementById('div_DIST_KM');
+            noUiSlider.create(sel_DIST_KM, {
+                connect: true,
+                start: [32.875, 32.875],
+                range: {
+                min: 32.875,
+                max: 32.875
+                }
+            });
+            sel_DIST_KM.noUiSlider.on('update', function (values) {
+            val_DIST_KM = document.getElementById('val_DIST_KM');
+            val_DIST_KM.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_PROFILE = document.createElement('div');
+            div_PROFILE.id = "div_PROFILE";
+            div_PROFILE.className= "filterselect";
+            document.getElementById("menu").appendChild(div_PROFILE);
+            sel_PROFILE = document.createElement('select');
+            sel_PROFILE.multiple = true;
+            sel_PROFILE.size = 1;
+            sel_PROFILE.id = "sel_PROFILE";
+            var PROFILE_options_str = "<option value='' unselected></option>";
+            sel_PROFILE.onchange = function(){filterFunc()};
+            PROFILE_options_str  += '<option value="driving-car">driving-car</option>';
+            sel_PROFILE.innerHTML = PROFILE_options_str;
+            div_PROFILE.appendChild(sel_PROFILE);
+            var lab_PROFILE = document.createElement('div');
+            lab_PROFILE.innerHTML = 'PROFILE';
+            lab_PROFILE.className = 'filterlabel';
+            div_PROFILE.appendChild(lab_PROFILE);
+            var reset_PROFILE = document.createElement('div');
+            reset_PROFILE.innerHTML = 'clear filter';
+            reset_PROFILE.className = 'filterlabel';
+            reset_PROFILE.onclick = function() {
+                var options = document.getElementById("sel_PROFILE").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_PROFILE.appendChild(reset_PROFILE);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_WB_A3 = document.createElement('div');
+            div_WB_A3.id = "div_WB_A3";
+            div_WB_A3.className= "filterselect";
+            document.getElementById("menu").appendChild(div_WB_A3);
+            sel_WB_A3 = document.createElement('select');
+            sel_WB_A3.multiple = true;
+            sel_WB_A3.size = 10;
+            sel_WB_A3.id = "sel_WB_A3";
+            var WB_A3_options_str = "<option value='' unselected></option>";
+            sel_WB_A3.onchange = function(){filterFunc()};
+            WB_A3_options_str  += '<option value="NULL">NULL</option>';
+            WB_A3_options_str  += '<option value="-99">-99</option>';
+            WB_A3_options_str  += '<option value="ABW">ABW</option>';
+            WB_A3_options_str  += '<option value="ADO">ADO</option>';
+            WB_A3_options_str  += '<option value="AFG">AFG</option>';
+            WB_A3_options_str  += '<option value="AGO">AGO</option>';
+            WB_A3_options_str  += '<option value="ALB">ALB</option>';
+            WB_A3_options_str  += '<option value="ARE">ARE</option>';
+            WB_A3_options_str  += '<option value="ARG">ARG</option>';
+            WB_A3_options_str  += '<option value="ARM">ARM</option>';
+            WB_A3_options_str  += '<option value="ASM">ASM</option>';
+            WB_A3_options_str  += '<option value="ATG">ATG</option>';
+            WB_A3_options_str  += '<option value="AUS">AUS</option>';
+            WB_A3_options_str  += '<option value="AUT">AUT</option>';
+            WB_A3_options_str  += '<option value="AZE">AZE</option>';
+            WB_A3_options_str  += '<option value="BDI">BDI</option>';
+            WB_A3_options_str  += '<option value="BEL">BEL</option>';
+            WB_A3_options_str  += '<option value="BEN">BEN</option>';
+            WB_A3_options_str  += '<option value="BFA">BFA</option>';
+            WB_A3_options_str  += '<option value="BGD">BGD</option>';
+            WB_A3_options_str  += '<option value="BGR">BGR</option>';
+            WB_A3_options_str  += '<option value="BHR">BHR</option>';
+            WB_A3_options_str  += '<option value="BHS">BHS</option>';
+            WB_A3_options_str  += '<option value="BIH">BIH</option>';
+            WB_A3_options_str  += '<option value="BLR">BLR</option>';
+            WB_A3_options_str  += '<option value="BLZ">BLZ</option>';
+            WB_A3_options_str  += '<option value="BMU">BMU</option>';
+            WB_A3_options_str  += '<option value="BOL">BOL</option>';
+            WB_A3_options_str  += '<option value="BRA">BRA</option>';
+            WB_A3_options_str  += '<option value="BRB">BRB</option>';
+            WB_A3_options_str  += '<option value="BRN">BRN</option>';
+            WB_A3_options_str  += '<option value="BTN">BTN</option>';
+            WB_A3_options_str  += '<option value="BWA">BWA</option>';
+            WB_A3_options_str  += '<option value="CAF">CAF</option>';
+            WB_A3_options_str  += '<option value="CAN">CAN</option>';
+            WB_A3_options_str  += '<option value="CHE">CHE</option>';
+            WB_A3_options_str  += '<option value="CHI">CHI</option>';
+            WB_A3_options_str  += '<option value="CHL">CHL</option>';
+            WB_A3_options_str  += '<option value="CHN">CHN</option>';
+            WB_A3_options_str  += '<option value="CIV">CIV</option>';
+            WB_A3_options_str  += '<option value="CMR">CMR</option>';
+            WB_A3_options_str  += '<option value="COG">COG</option>';
+            WB_A3_options_str  += '<option value="COL">COL</option>';
+            WB_A3_options_str  += '<option value="COM">COM</option>';
+            WB_A3_options_str  += '<option value="CPV">CPV</option>';
+            WB_A3_options_str  += '<option value="CRI">CRI</option>';
+            WB_A3_options_str  += '<option value="CUB">CUB</option>';
+            WB_A3_options_str  += '<option value="CUW">CUW</option>';
+            WB_A3_options_str  += '<option value="CYM">CYM</option>';
+            WB_A3_options_str  += '<option value="CYP">CYP</option>';
+            WB_A3_options_str  += '<option value="CZE">CZE</option>';
+            WB_A3_options_str  += '<option value="DEU">DEU</option>';
+            WB_A3_options_str  += '<option value="DJI">DJI</option>';
+            WB_A3_options_str  += '<option value="DMA">DMA</option>';
+            WB_A3_options_str  += '<option value="DNK">DNK</option>';
+            WB_A3_options_str  += '<option value="DOM">DOM</option>';
+            WB_A3_options_str  += '<option value="DZA">DZA</option>';
+            WB_A3_options_str  += '<option value="ECU">ECU</option>';
+            WB_A3_options_str  += '<option value="EGY">EGY</option>';
+            WB_A3_options_str  += '<option value="ERI">ERI</option>';
+            WB_A3_options_str  += '<option value="ESP">ESP</option>';
+            WB_A3_options_str  += '<option value="EST">EST</option>';
+            WB_A3_options_str  += '<option value="ETH">ETH</option>';
+            WB_A3_options_str  += '<option value="FIN">FIN</option>';
+            WB_A3_options_str  += '<option value="FJI">FJI</option>';
+            WB_A3_options_str  += '<option value="FRA">FRA</option>';
+            WB_A3_options_str  += '<option value="FRO">FRO</option>';
+            WB_A3_options_str  += '<option value="FSM">FSM</option>';
+            WB_A3_options_str  += '<option value="GAB">GAB</option>';
+            WB_A3_options_str  += '<option value="GBR">GBR</option>';
+            WB_A3_options_str  += '<option value="GEO">GEO</option>';
+            WB_A3_options_str  += '<option value="GHA">GHA</option>';
+            WB_A3_options_str  += '<option value="GIN">GIN</option>';
+            WB_A3_options_str  += '<option value="GMB">GMB</option>';
+            WB_A3_options_str  += '<option value="GNB">GNB</option>';
+            WB_A3_options_str  += '<option value="GNQ">GNQ</option>';
+            WB_A3_options_str  += '<option value="GRC">GRC</option>';
+            WB_A3_options_str  += '<option value="GRD">GRD</option>';
+            WB_A3_options_str  += '<option value="GRL">GRL</option>';
+            WB_A3_options_str  += '<option value="GTM">GTM</option>';
+            WB_A3_options_str  += '<option value="GUM">GUM</option>';
+            WB_A3_options_str  += '<option value="GUY">GUY</option>';
+            WB_A3_options_str  += '<option value="HKG">HKG</option>';
+            WB_A3_options_str  += '<option value="HND">HND</option>';
+            WB_A3_options_str  += '<option value="HRV">HRV</option>';
+            WB_A3_options_str  += '<option value="HTI">HTI</option>';
+            WB_A3_options_str  += '<option value="HUN">HUN</option>';
+            WB_A3_options_str  += '<option value="IDN">IDN</option>';
+            WB_A3_options_str  += '<option value="IMY">IMY</option>';
+            WB_A3_options_str  += '<option value="IND">IND</option>';
+            WB_A3_options_str  += '<option value="IRL">IRL</option>';
+            WB_A3_options_str  += '<option value="IRN">IRN</option>';
+            WB_A3_options_str  += '<option value="IRQ">IRQ</option>';
+            WB_A3_options_str  += '<option value="ISL">ISL</option>';
+            WB_A3_options_str  += '<option value="ISR">ISR</option>';
+            WB_A3_options_str  += '<option value="ITA">ITA</option>';
+            WB_A3_options_str  += '<option value="JAM">JAM</option>';
+            WB_A3_options_str  += '<option value="JOR">JOR</option>';
+            WB_A3_options_str  += '<option value="JPN">JPN</option>';
+            WB_A3_options_str  += '<option value="KAZ">KAZ</option>';
+            WB_A3_options_str  += '<option value="KEN">KEN</option>';
+            WB_A3_options_str  += '<option value="KGZ">KGZ</option>';
+            WB_A3_options_str  += '<option value="KHM">KHM</option>';
+            WB_A3_options_str  += '<option value="KIR">KIR</option>';
+            WB_A3_options_str  += '<option value="KNA">KNA</option>';
+            WB_A3_options_str  += '<option value="KOR">KOR</option>';
+            WB_A3_options_str  += '<option value="KSV">KSV</option>';
+            WB_A3_options_str  += '<option value="KWT">KWT</option>';
+            WB_A3_options_str  += '<option value="LAO">LAO</option>';
+            WB_A3_options_str  += '<option value="LBN">LBN</option>';
+            WB_A3_options_str  += '<option value="LBR">LBR</option>';
+            WB_A3_options_str  += '<option value="LBY">LBY</option>';
+            WB_A3_options_str  += '<option value="LCA">LCA</option>';
+            WB_A3_options_str  += '<option value="LIE">LIE</option>';
+            WB_A3_options_str  += '<option value="LKA">LKA</option>';
+            WB_A3_options_str  += '<option value="LSO">LSO</option>';
+            WB_A3_options_str  += '<option value="LTU">LTU</option>';
+            WB_A3_options_str  += '<option value="LUX">LUX</option>';
+            WB_A3_options_str  += '<option value="LVA">LVA</option>';
+            WB_A3_options_str  += '<option value="MAC">MAC</option>';
+            WB_A3_options_str  += '<option value="MAF">MAF</option>';
+            WB_A3_options_str  += '<option value="MAR">MAR</option>';
+            WB_A3_options_str  += '<option value="MCO">MCO</option>';
+            WB_A3_options_str  += '<option value="MDA">MDA</option>';
+            WB_A3_options_str  += '<option value="MDG">MDG</option>';
+            WB_A3_options_str  += '<option value="MDV">MDV</option>';
+            WB_A3_options_str  += '<option value="MEX">MEX</option>';
+            WB_A3_options_str  += '<option value="MHL">MHL</option>';
+            WB_A3_options_str  += '<option value="MKD">MKD</option>';
+            WB_A3_options_str  += '<option value="MLI">MLI</option>';
+            WB_A3_options_str  += '<option value="MLT">MLT</option>';
+            WB_A3_options_str  += '<option value="MMR">MMR</option>';
+            WB_A3_options_str  += '<option value="MNE">MNE</option>';
+            WB_A3_options_str  += '<option value="MNG">MNG</option>';
+            WB_A3_options_str  += '<option value="MNP">MNP</option>';
+            WB_A3_options_str  += '<option value="MOZ">MOZ</option>';
+            WB_A3_options_str  += '<option value="MRT">MRT</option>';
+            WB_A3_options_str  += '<option value="MUS">MUS</option>';
+            WB_A3_options_str  += '<option value="MWI">MWI</option>';
+            WB_A3_options_str  += '<option value="MYS">MYS</option>';
+            WB_A3_options_str  += '<option value="NAM">NAM</option>';
+            WB_A3_options_str  += '<option value="NCL">NCL</option>';
+            WB_A3_options_str  += '<option value="NER">NER</option>';
+            WB_A3_options_str  += '<option value="NGA">NGA</option>';
+            WB_A3_options_str  += '<option value="NIC">NIC</option>';
+            WB_A3_options_str  += '<option value="NLD">NLD</option>';
+            WB_A3_options_str  += '<option value="NOR">NOR</option>';
+            WB_A3_options_str  += '<option value="NPL">NPL</option>';
+            WB_A3_options_str  += '<option value="NZL">NZL</option>';
+            WB_A3_options_str  += '<option value="OMN">OMN</option>';
+            WB_A3_options_str  += '<option value="PAK">PAK</option>';
+            WB_A3_options_str  += '<option value="PAN">PAN</option>';
+            WB_A3_options_str  += '<option value="PER">PER</option>';
+            WB_A3_options_str  += '<option value="PHL">PHL</option>';
+            WB_A3_options_str  += '<option value="PLW">PLW</option>';
+            WB_A3_options_str  += '<option value="PNG">PNG</option>';
+            WB_A3_options_str  += '<option value="POL">POL</option>';
+            WB_A3_options_str  += '<option value="PRI">PRI</option>';
+            WB_A3_options_str  += '<option value="PRK">PRK</option>';
+            WB_A3_options_str  += '<option value="PRT">PRT</option>';
+            WB_A3_options_str  += '<option value="PRY">PRY</option>';
+            WB_A3_options_str  += '<option value="PYF">PYF</option>';
+            WB_A3_options_str  += '<option value="QAT">QAT</option>';
+            WB_A3_options_str  += '<option value="ROM">ROM</option>';
+            WB_A3_options_str  += '<option value="RUS">RUS</option>';
+            WB_A3_options_str  += '<option value="RWA">RWA</option>';
+            WB_A3_options_str  += '<option value="SAU">SAU</option>';
+            WB_A3_options_str  += '<option value="SDN">SDN</option>';
+            WB_A3_options_str  += '<option value="SEN">SEN</option>';
+            WB_A3_options_str  += '<option value="SGP">SGP</option>';
+            WB_A3_options_str  += '<option value="SLB">SLB</option>';
+            WB_A3_options_str  += '<option value="SLE">SLE</option>';
+            WB_A3_options_str  += '<option value="SLV">SLV</option>';
+            WB_A3_options_str  += '<option value="SMR">SMR</option>';
+            WB_A3_options_str  += '<option value="SOM">SOM</option>';
+            WB_A3_options_str  += '<option value="SRB">SRB</option>';
+            WB_A3_options_str  += '<option value="SSD">SSD</option>';
+            WB_A3_options_str  += '<option value="STP">STP</option>';
+            WB_A3_options_str  += '<option value="SUR">SUR</option>';
+            WB_A3_options_str  += '<option value="SVK">SVK</option>';
+            WB_A3_options_str  += '<option value="SVN">SVN</option>';
+            WB_A3_options_str  += '<option value="SWE">SWE</option>';
+            WB_A3_options_str  += '<option value="SWZ">SWZ</option>';
+            WB_A3_options_str  += '<option value="SXM">SXM</option>';
+            WB_A3_options_str  += '<option value="SYC">SYC</option>';
+            WB_A3_options_str  += '<option value="SYR">SYR</option>';
+            WB_A3_options_str  += '<option value="TCA">TCA</option>';
+            WB_A3_options_str  += '<option value="TCD">TCD</option>';
+            WB_A3_options_str  += '<option value="TGO">TGO</option>';
+            WB_A3_options_str  += '<option value="THA">THA</option>';
+            WB_A3_options_str  += '<option value="TJK">TJK</option>';
+            WB_A3_options_str  += '<option value="TKM">TKM</option>';
+            WB_A3_options_str  += '<option value="TMP">TMP</option>';
+            WB_A3_options_str  += '<option value="TON">TON</option>';
+            WB_A3_options_str  += '<option value="TTO">TTO</option>';
+            WB_A3_options_str  += '<option value="TUN">TUN</option>';
+            WB_A3_options_str  += '<option value="TUR">TUR</option>';
+            WB_A3_options_str  += '<option value="TUV">TUV</option>';
+            WB_A3_options_str  += '<option value="TZA">TZA</option>';
+            WB_A3_options_str  += '<option value="UGA">UGA</option>';
+            WB_A3_options_str  += '<option value="UKR">UKR</option>';
+            WB_A3_options_str  += '<option value="URY">URY</option>';
+            WB_A3_options_str  += '<option value="USA">USA</option>';
+            WB_A3_options_str  += '<option value="UZB">UZB</option>';
+            WB_A3_options_str  += '<option value="VCT">VCT</option>';
+            WB_A3_options_str  += '<option value="VEN">VEN</option>';
+            WB_A3_options_str  += '<option value="VIR">VIR</option>';
+            WB_A3_options_str  += '<option value="VNM">VNM</option>';
+            WB_A3_options_str  += '<option value="VUT">VUT</option>';
+            WB_A3_options_str  += '<option value="WBG">WBG</option>';
+            WB_A3_options_str  += '<option value="WSM">WSM</option>';
+            WB_A3_options_str  += '<option value="YEM">YEM</option>';
+            WB_A3_options_str  += '<option value="ZAF">ZAF</option>';
+            WB_A3_options_str  += '<option value="ZAR">ZAR</option>';
+            WB_A3_options_str  += '<option value="ZMB">ZMB</option>';
+            WB_A3_options_str  += '<option value="ZWE">ZWE</option>';
+            sel_WB_A3.innerHTML = WB_A3_options_str;
+            div_WB_A3.appendChild(sel_WB_A3);
+            var lab_WB_A3 = document.createElement('div');
+            lab_WB_A3.innerHTML = 'WB_A3';
+            lab_WB_A3.className = 'filterlabel';
+            div_WB_A3.appendChild(lab_WB_A3);
+            var reset_WB_A3 = document.createElement('div');
+            reset_WB_A3.innerHTML = 'clear filter';
+            reset_WB_A3.className = 'filterlabel';
+            reset_WB_A3.onclick = function() {
+                var options = document.getElementById("sel_WB_A3").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_WB_A3.appendChild(reset_WB_A3);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_description = document.createElement('div');
+            div_description.id = "div_description";
+            div_description.className= "filterselect";
+            document.getElementById("menu").appendChild(div_description);
+            sel_description = document.createElement('select');
+            sel_description.multiple = true;
+            sel_description.size = 5;
+            sel_description.id = "sel_description";
+            var description_options_str = "<option value='' unselected></option>";
+            sel_description.onchange = function(){filterFunc()};
+            description_options_str  += '<option value="NULL">NULL</option>';
+            description_options_str  += '<option value=" Ghodbunder Rd"> Ghodbunder Rd</option>';
+            description_options_str  += '<option value=" Ghodbunder Road"> Ghodbunder Road</option>';
+            description_options_str  += '<option value=" Indusind Bank"> Indusind Bank</option>';
+            description_options_str  += '<option value=" Police Chowki"> Police Chowki</option>';
+            sel_description.innerHTML = description_options_str;
+            div_description.appendChild(sel_description);
+            var lab_description = document.createElement('div');
+            lab_description.innerHTML = 'description';
+            lab_description.className = 'filterlabel';
+            div_description.appendChild(lab_description);
+            var reset_description = document.createElement('div');
+            reset_description.innerHTML = 'clear filter';
+            reset_description.className = 'filterlabel';
+            reset_description.onclick = function() {
+                var options = document.getElementById("sel_description").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_description.appendChild(reset_description);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_FROM_ID = document.createElement('div');
+            div_FROM_ID.id = "div_FROM_ID";
+            div_FROM_ID.className= "filterselect";
+            document.getElementById("menu").appendChild(div_FROM_ID);
+            sel_FROM_ID = document.createElement('select');
+            sel_FROM_ID.multiple = true;
+            sel_FROM_ID.size = 1;
+            sel_FROM_ID.id = "sel_FROM_ID";
+            var FROM_ID_options_str = "<option value='' unselected></option>";
+            sel_FROM_ID.onchange = function(){filterFunc()};
+            FROM_ID_options_str  += '<option value="NULL">NULL</option>';
+            sel_FROM_ID.innerHTML = FROM_ID_options_str;
+            div_FROM_ID.appendChild(sel_FROM_ID);
+            var lab_FROM_ID = document.createElement('div');
+            lab_FROM_ID.innerHTML = 'FROM_ID';
+            lab_FROM_ID.className = 'filterlabel';
+            div_FROM_ID.appendChild(lab_FROM_ID);
+            var reset_FROM_ID = document.createElement('div');
+            reset_FROM_ID.innerHTML = 'clear filter';
+            reset_FROM_ID.className = 'filterlabel';
+            reset_FROM_ID.onclick = function() {
+                var options = document.getElementById("sel_FROM_ID").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_FROM_ID.appendChild(reset_FROM_ID);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_WB_A2 = document.createElement('div');
+            div_WB_A2.id = "div_WB_A2";
+            div_WB_A2.className= "filterselect";
+            document.getElementById("menu").appendChild(div_WB_A2);
+            sel_WB_A2 = document.createElement('select');
+            sel_WB_A2.multiple = true;
+            sel_WB_A2.size = 10;
+            sel_WB_A2.id = "sel_WB_A2";
+            var WB_A2_options_str = "<option value='' unselected></option>";
+            sel_WB_A2.onchange = function(){filterFunc()};
+            WB_A2_options_str  += '<option value="NULL">NULL</option>';
+            WB_A2_options_str  += '<option value="-99">-99</option>';
+            WB_A2_options_str  += '<option value="AD">AD</option>';
+            WB_A2_options_str  += '<option value="AE">AE</option>';
+            WB_A2_options_str  += '<option value="AF">AF</option>';
+            WB_A2_options_str  += '<option value="AG">AG</option>';
+            WB_A2_options_str  += '<option value="AL">AL</option>';
+            WB_A2_options_str  += '<option value="AM">AM</option>';
+            WB_A2_options_str  += '<option value="AO">AO</option>';
+            WB_A2_options_str  += '<option value="AR">AR</option>';
+            WB_A2_options_str  += '<option value="AS">AS</option>';
+            WB_A2_options_str  += '<option value="AT">AT</option>';
+            WB_A2_options_str  += '<option value="AU">AU</option>';
+            WB_A2_options_str  += '<option value="AW">AW</option>';
+            WB_A2_options_str  += '<option value="AZ">AZ</option>';
+            WB_A2_options_str  += '<option value="BA">BA</option>';
+            WB_A2_options_str  += '<option value="BB">BB</option>';
+            WB_A2_options_str  += '<option value="BD">BD</option>';
+            WB_A2_options_str  += '<option value="BE">BE</option>';
+            WB_A2_options_str  += '<option value="BF">BF</option>';
+            WB_A2_options_str  += '<option value="BG">BG</option>';
+            WB_A2_options_str  += '<option value="BH">BH</option>';
+            WB_A2_options_str  += '<option value="BI">BI</option>';
+            WB_A2_options_str  += '<option value="BJ">BJ</option>';
+            WB_A2_options_str  += '<option value="BM">BM</option>';
+            WB_A2_options_str  += '<option value="BN">BN</option>';
+            WB_A2_options_str  += '<option value="BO">BO</option>';
+            WB_A2_options_str  += '<option value="BR">BR</option>';
+            WB_A2_options_str  += '<option value="BS">BS</option>';
+            WB_A2_options_str  += '<option value="BT">BT</option>';
+            WB_A2_options_str  += '<option value="BW">BW</option>';
+            WB_A2_options_str  += '<option value="BY">BY</option>';
+            WB_A2_options_str  += '<option value="BZ">BZ</option>';
+            WB_A2_options_str  += '<option value="CA">CA</option>';
+            WB_A2_options_str  += '<option value="CF">CF</option>';
+            WB_A2_options_str  += '<option value="CG">CG</option>';
+            WB_A2_options_str  += '<option value="CH">CH</option>';
+            WB_A2_options_str  += '<option value="CI">CI</option>';
+            WB_A2_options_str  += '<option value="CL">CL</option>';
+            WB_A2_options_str  += '<option value="CM">CM</option>';
+            WB_A2_options_str  += '<option value="CN">CN</option>';
+            WB_A2_options_str  += '<option value="CO">CO</option>';
+            WB_A2_options_str  += '<option value="CR">CR</option>';
+            WB_A2_options_str  += '<option value="CU">CU</option>';
+            WB_A2_options_str  += '<option value="CV">CV</option>';
+            WB_A2_options_str  += '<option value="CW">CW</option>';
+            WB_A2_options_str  += '<option value="CY">CY</option>';
+            WB_A2_options_str  += '<option value="CZ">CZ</option>';
+            WB_A2_options_str  += '<option value="DE">DE</option>';
+            WB_A2_options_str  += '<option value="DJ">DJ</option>';
+            WB_A2_options_str  += '<option value="DK">DK</option>';
+            WB_A2_options_str  += '<option value="DM">DM</option>';
+            WB_A2_options_str  += '<option value="DO">DO</option>';
+            WB_A2_options_str  += '<option value="DZ">DZ</option>';
+            WB_A2_options_str  += '<option value="EC">EC</option>';
+            WB_A2_options_str  += '<option value="EE">EE</option>';
+            WB_A2_options_str  += '<option value="EG">EG</option>';
+            WB_A2_options_str  += '<option value="ER">ER</option>';
+            WB_A2_options_str  += '<option value="ES">ES</option>';
+            WB_A2_options_str  += '<option value="ET">ET</option>';
+            WB_A2_options_str  += '<option value="FI">FI</option>';
+            WB_A2_options_str  += '<option value="FJ">FJ</option>';
+            WB_A2_options_str  += '<option value="FM">FM</option>';
+            WB_A2_options_str  += '<option value="FO">FO</option>';
+            WB_A2_options_str  += '<option value="FR">FR</option>';
+            WB_A2_options_str  += '<option value="GA">GA</option>';
+            WB_A2_options_str  += '<option value="GB">GB</option>';
+            WB_A2_options_str  += '<option value="GD">GD</option>';
+            WB_A2_options_str  += '<option value="GE">GE</option>';
+            WB_A2_options_str  += '<option value="GH">GH</option>';
+            WB_A2_options_str  += '<option value="GL">GL</option>';
+            WB_A2_options_str  += '<option value="GM">GM</option>';
+            WB_A2_options_str  += '<option value="GN">GN</option>';
+            WB_A2_options_str  += '<option value="GQ">GQ</option>';
+            WB_A2_options_str  += '<option value="GR">GR</option>';
+            WB_A2_options_str  += '<option value="GT">GT</option>';
+            WB_A2_options_str  += '<option value="GU">GU</option>';
+            WB_A2_options_str  += '<option value="GW">GW</option>';
+            WB_A2_options_str  += '<option value="GY">GY</option>';
+            WB_A2_options_str  += '<option value="GZ">GZ</option>';
+            WB_A2_options_str  += '<option value="HK">HK</option>';
+            WB_A2_options_str  += '<option value="HN">HN</option>';
+            WB_A2_options_str  += '<option value="HR">HR</option>';
+            WB_A2_options_str  += '<option value="HT">HT</option>';
+            WB_A2_options_str  += '<option value="HU">HU</option>';
+            WB_A2_options_str  += '<option value="ID">ID</option>';
+            WB_A2_options_str  += '<option value="IE">IE</option>';
+            WB_A2_options_str  += '<option value="IL">IL</option>';
+            WB_A2_options_str  += '<option value="IM">IM</option>';
+            WB_A2_options_str  += '<option value="IN">IN</option>';
+            WB_A2_options_str  += '<option value="IQ">IQ</option>';
+            WB_A2_options_str  += '<option value="IR">IR</option>';
+            WB_A2_options_str  += '<option value="IS">IS</option>';
+            WB_A2_options_str  += '<option value="IT">IT</option>';
+            WB_A2_options_str  += '<option value="JG">JG</option>';
+            WB_A2_options_str  += '<option value="JM">JM</option>';
+            WB_A2_options_str  += '<option value="JO">JO</option>';
+            WB_A2_options_str  += '<option value="JP">JP</option>';
+            WB_A2_options_str  += '<option value="KE">KE</option>';
+            WB_A2_options_str  += '<option value="KG">KG</option>';
+            WB_A2_options_str  += '<option value="KH">KH</option>';
+            WB_A2_options_str  += '<option value="KI">KI</option>';
+            WB_A2_options_str  += '<option value="KM">KM</option>';
+            WB_A2_options_str  += '<option value="KN">KN</option>';
+            WB_A2_options_str  += '<option value="KP">KP</option>';
+            WB_A2_options_str  += '<option value="KR">KR</option>';
+            WB_A2_options_str  += '<option value="KV">KV</option>';
+            WB_A2_options_str  += '<option value="KW">KW</option>';
+            WB_A2_options_str  += '<option value="KY">KY</option>';
+            WB_A2_options_str  += '<option value="KZ">KZ</option>';
+            WB_A2_options_str  += '<option value="LA">LA</option>';
+            WB_A2_options_str  += '<option value="LB">LB</option>';
+            WB_A2_options_str  += '<option value="LC">LC</option>';
+            WB_A2_options_str  += '<option value="LI">LI</option>';
+            WB_A2_options_str  += '<option value="LK">LK</option>';
+            WB_A2_options_str  += '<option value="LR">LR</option>';
+            WB_A2_options_str  += '<option value="LS">LS</option>';
+            WB_A2_options_str  += '<option value="LT">LT</option>';
+            WB_A2_options_str  += '<option value="LU">LU</option>';
+            WB_A2_options_str  += '<option value="LV">LV</option>';
+            WB_A2_options_str  += '<option value="LY">LY</option>';
+            WB_A2_options_str  += '<option value="MA">MA</option>';
+            WB_A2_options_str  += '<option value="MC">MC</option>';
+            WB_A2_options_str  += '<option value="MD">MD</option>';
+            WB_A2_options_str  += '<option value="ME">ME</option>';
+            WB_A2_options_str  += '<option value="MF">MF</option>';
+            WB_A2_options_str  += '<option value="MG">MG</option>';
+            WB_A2_options_str  += '<option value="MH">MH</option>';
+            WB_A2_options_str  += '<option value="MK">MK</option>';
+            WB_A2_options_str  += '<option value="ML">ML</option>';
+            WB_A2_options_str  += '<option value="MM">MM</option>';
+            WB_A2_options_str  += '<option value="MN">MN</option>';
+            WB_A2_options_str  += '<option value="MO">MO</option>';
+            WB_A2_options_str  += '<option value="MP">MP</option>';
+            WB_A2_options_str  += '<option value="MR">MR</option>';
+            WB_A2_options_str  += '<option value="MT">MT</option>';
+            WB_A2_options_str  += '<option value="MU">MU</option>';
+            WB_A2_options_str  += '<option value="MV">MV</option>';
+            WB_A2_options_str  += '<option value="MW">MW</option>';
+            WB_A2_options_str  += '<option value="MX">MX</option>';
+            WB_A2_options_str  += '<option value="MY">MY</option>';
+            WB_A2_options_str  += '<option value="MZ">MZ</option>';
+            WB_A2_options_str  += '<option value="NA">NA</option>';
+            WB_A2_options_str  += '<option value="NC">NC</option>';
+            WB_A2_options_str  += '<option value="NE">NE</option>';
+            WB_A2_options_str  += '<option value="NG">NG</option>';
+            WB_A2_options_str  += '<option value="NI">NI</option>';
+            WB_A2_options_str  += '<option value="NL">NL</option>';
+            WB_A2_options_str  += '<option value="NO">NO</option>';
+            WB_A2_options_str  += '<option value="NP">NP</option>';
+            WB_A2_options_str  += '<option value="NZ">NZ</option>';
+            WB_A2_options_str  += '<option value="OM">OM</option>';
+            WB_A2_options_str  += '<option value="PA">PA</option>';
+            WB_A2_options_str  += '<option value="PE">PE</option>';
+            WB_A2_options_str  += '<option value="PF">PF</option>';
+            WB_A2_options_str  += '<option value="PG">PG</option>';
+            WB_A2_options_str  += '<option value="PH">PH</option>';
+            WB_A2_options_str  += '<option value="PK">PK</option>';
+            WB_A2_options_str  += '<option value="PL">PL</option>';
+            WB_A2_options_str  += '<option value="PR">PR</option>';
+            WB_A2_options_str  += '<option value="PT">PT</option>';
+            WB_A2_options_str  += '<option value="PW">PW</option>';
+            WB_A2_options_str  += '<option value="PY">PY</option>';
+            WB_A2_options_str  += '<option value="QA">QA</option>';
+            WB_A2_options_str  += '<option value="RO">RO</option>';
+            WB_A2_options_str  += '<option value="RU">RU</option>';
+            WB_A2_options_str  += '<option value="RW">RW</option>';
+            WB_A2_options_str  += '<option value="RY">RY</option>';
+            WB_A2_options_str  += '<option value="SA">SA</option>';
+            WB_A2_options_str  += '<option value="SB">SB</option>';
+            WB_A2_options_str  += '<option value="SC">SC</option>';
+            WB_A2_options_str  += '<option value="SD">SD</option>';
+            WB_A2_options_str  += '<option value="SE">SE</option>';
+            WB_A2_options_str  += '<option value="SG">SG</option>';
+            WB_A2_options_str  += '<option value="SI">SI</option>';
+            WB_A2_options_str  += '<option value="SK">SK</option>';
+            WB_A2_options_str  += '<option value="SL">SL</option>';
+            WB_A2_options_str  += '<option value="SM">SM</option>';
+            WB_A2_options_str  += '<option value="SN">SN</option>';
+            WB_A2_options_str  += '<option value="SO">SO</option>';
+            WB_A2_options_str  += '<option value="SR">SR</option>';
+            WB_A2_options_str  += '<option value="SS">SS</option>';
+            WB_A2_options_str  += '<option value="ST">ST</option>';
+            WB_A2_options_str  += '<option value="SV">SV</option>';
+            WB_A2_options_str  += '<option value="SX">SX</option>';
+            WB_A2_options_str  += '<option value="SY">SY</option>';
+            WB_A2_options_str  += '<option value="SZ">SZ</option>';
+            WB_A2_options_str  += '<option value="TC">TC</option>';
+            WB_A2_options_str  += '<option value="TD">TD</option>';
+            WB_A2_options_str  += '<option value="TG">TG</option>';
+            WB_A2_options_str  += '<option value="TH">TH</option>';
+            WB_A2_options_str  += '<option value="TJ">TJ</option>';
+            WB_A2_options_str  += '<option value="TM">TM</option>';
+            WB_A2_options_str  += '<option value="TN">TN</option>';
+            WB_A2_options_str  += '<option value="TO">TO</option>';
+            WB_A2_options_str  += '<option value="TP">TP</option>';
+            WB_A2_options_str  += '<option value="TR">TR</option>';
+            WB_A2_options_str  += '<option value="TT">TT</option>';
+            WB_A2_options_str  += '<option value="TV">TV</option>';
+            WB_A2_options_str  += '<option value="TZ">TZ</option>';
+            WB_A2_options_str  += '<option value="UA">UA</option>';
+            WB_A2_options_str  += '<option value="UG">UG</option>';
+            WB_A2_options_str  += '<option value="US">US</option>';
+            WB_A2_options_str  += '<option value="UY">UY</option>';
+            WB_A2_options_str  += '<option value="UZ">UZ</option>';
+            WB_A2_options_str  += '<option value="VC">VC</option>';
+            WB_A2_options_str  += '<option value="VE">VE</option>';
+            WB_A2_options_str  += '<option value="VI">VI</option>';
+            WB_A2_options_str  += '<option value="VN">VN</option>';
+            WB_A2_options_str  += '<option value="VU">VU</option>';
+            WB_A2_options_str  += '<option value="WS">WS</option>';
+            WB_A2_options_str  += '<option value="YF">YF</option>';
+            WB_A2_options_str  += '<option value="ZA">ZA</option>';
+            WB_A2_options_str  += '<option value="ZM">ZM</option>';
+            WB_A2_options_str  += '<option value="ZR">ZR</option>';
+            WB_A2_options_str  += '<option value="ZW">ZW</option>';
+            sel_WB_A2.innerHTML = WB_A2_options_str;
+            div_WB_A2.appendChild(sel_WB_A2);
+            var lab_WB_A2 = document.createElement('div');
+            lab_WB_A2.innerHTML = 'WB_A2';
+            lab_WB_A2.className = 'filterlabel';
+            div_WB_A2.appendChild(lab_WB_A2);
+            var reset_WB_A2 = document.createElement('div');
+            reset_WB_A2.innerHTML = 'clear filter';
+            reset_WB_A2.className = 'filterlabel';
+            reset_WB_A2.onclick = function() {
+                var options = document.getElementById("sel_WB_A2").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_WB_A2.appendChild(reset_WB_A2);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_NAME = document.createElement('div');
+            div_NAME.id = "div_NAME";
+            div_NAME.className= "filterselect";
+            document.getElementById("menu").appendChild(div_NAME);
+            sel_NAME = document.createElement('select');
+            sel_NAME.multiple = true;
+            sel_NAME.size = 10;
+            sel_NAME.id = "sel_NAME";
+            var NAME_options_str = "<option value='' unselected></option>";
+            sel_NAME.onchange = function(){filterFunc()};
+            NAME_options_str  += '<option value="NULL">NULL</option>';
+            NAME_options_str  += '<option value="Afghanistan">Afghanistan</option>';
+            NAME_options_str  += '<option value="Albania">Albania</option>';
+            NAME_options_str  += '<option value="Algeria">Algeria</option>';
+            NAME_options_str  += '<option value="American Samoa">American Samoa</option>';
+            NAME_options_str  += '<option value="Andorra">Andorra</option>';
+            NAME_options_str  += '<option value="Angola">Angola</option>';
+            NAME_options_str  += '<option value="Anguilla">Anguilla</option>';
+            NAME_options_str  += '<option value="Antarctica">Antarctica</option>';
+            NAME_options_str  += '<option value="Antigua and Barb.">Antigua and Barb.</option>';
+            NAME_options_str  += '<option value="Argentina">Argentina</option>';
+            NAME_options_str  += '<option value="Armenia">Armenia</option>';
+            NAME_options_str  += '<option value="Aruba">Aruba</option>';
+            NAME_options_str  += '<option value="Australia">Australia</option>';
+            NAME_options_str  += '<option value="Austria">Austria</option>';
+            NAME_options_str  += '<option value="Azerbaijan">Azerbaijan</option>';
+            NAME_options_str  += '<option value="Bahamas">Bahamas</option>';
+            NAME_options_str  += '<option value="Bahrain">Bahrain</option>';
+            NAME_options_str  += '<option value="Bangladesh">Bangladesh</option>';
+            NAME_options_str  += '<option value="Barbados">Barbados</option>';
+            NAME_options_str  += '<option value="Belarus">Belarus</option>';
+            NAME_options_str  += '<option value="Belgium">Belgium</option>';
+            NAME_options_str  += '<option value="Belize">Belize</option>';
+            NAME_options_str  += '<option value="Benin">Benin</option>';
+            NAME_options_str  += '<option value="Bermuda">Bermuda</option>';
+            NAME_options_str  += '<option value="Bhutan">Bhutan</option>';
+            NAME_options_str  += '<option value="Bolivia">Bolivia</option>';
+            NAME_options_str  += '<option value="Bosnia and Herz.">Bosnia and Herz.</option>';
+            NAME_options_str  += '<option value="Botswana">Botswana</option>';
+            NAME_options_str  += '<option value="Br. Indian Ocean Ter.">Br. Indian Ocean Ter.</option>';
+            NAME_options_str  += '<option value="Brazil">Brazil</option>';
+            NAME_options_str  += '<option value="British Virgin Is.">British Virgin Is.</option>';
+            NAME_options_str  += '<option value="Brunei">Brunei</option>';
+            NAME_options_str  += '<option value="Bulgaria">Bulgaria</option>';
+            NAME_options_str  += '<option value="Burkina Faso">Burkina Faso</option>';
+            NAME_options_str  += '<option value="Burundi">Burundi</option>';
+            NAME_options_str  += '<option value="Cabo Verde">Cabo Verde</option>';
+            NAME_options_str  += '<option value="Cambodia">Cambodia</option>';
+            NAME_options_str  += '<option value="Cameroon">Cameroon</option>';
+            NAME_options_str  += '<option value="Canada">Canada</option>';
+            NAME_options_str  += '<option value="Cayman Is.">Cayman Is.</option>';
+            NAME_options_str  += '<option value="Central African Rep.">Central African Rep.</option>';
+            NAME_options_str  += '<option value="Chad">Chad</option>';
+            NAME_options_str  += '<option value="Chile">Chile</option>';
+            NAME_options_str  += '<option value="China">China</option>';
+            NAME_options_str  += '<option value="Colombia">Colombia</option>';
+            NAME_options_str  += '<option value="Comoros">Comoros</option>';
+            NAME_options_str  += '<option value="Congo">Congo</option>';
+            NAME_options_str  += '<option value="Cook Is.">Cook Is.</option>';
+            NAME_options_str  += '<option value="Costa Rica">Costa Rica</option>';
+            NAME_options_str  += '<option value="Croatia">Croatia</option>';
+            NAME_options_str  += '<option value="Cuba">Cuba</option>';
+            NAME_options_str  += '<option value="Curaçao">Curaçao</option>';
+            NAME_options_str  += '<option value="Cyprus">Cyprus</option>';
+            NAME_options_str  += '<option value="Czechia">Czechia</option>';
+            NAME_options_str  += '<option value="Côte d&apos;Ivoire">Côte d&apos;Ivoire</option>';
+            NAME_options_str  += '<option value="Dem. Rep. Congo">Dem. Rep. Congo</option>';
+            NAME_options_str  += '<option value="Denmark">Denmark</option>';
+            NAME_options_str  += '<option value="Djibouti">Djibouti</option>';
+            NAME_options_str  += '<option value="Dominica">Dominica</option>';
+            NAME_options_str  += '<option value="Dominican Rep.">Dominican Rep.</option>';
+            NAME_options_str  += '<option value="Ecuador">Ecuador</option>';
+            NAME_options_str  += '<option value="Egypt">Egypt</option>';
+            NAME_options_str  += '<option value="El Salvador">El Salvador</option>';
+            NAME_options_str  += '<option value="Eq. Guinea">Eq. Guinea</option>';
+            NAME_options_str  += '<option value="Eritrea">Eritrea</option>';
+            NAME_options_str  += '<option value="Estonia">Estonia</option>';
+            NAME_options_str  += '<option value="Ethiopia">Ethiopia</option>';
+            NAME_options_str  += '<option value="Faeroe Is.">Faeroe Is.</option>';
+            NAME_options_str  += '<option value="Falkland Is.">Falkland Is.</option>';
+            NAME_options_str  += '<option value="Fiji">Fiji</option>';
+            NAME_options_str  += '<option value="Finland">Finland</option>';
+            NAME_options_str  += '<option value="Fr. Polynesia">Fr. Polynesia</option>';
+            NAME_options_str  += '<option value="Fr. S. Antarctic Lands">Fr. S. Antarctic Lands</option>';
+            NAME_options_str  += '<option value="France">France</option>';
+            NAME_options_str  += '<option value="Gabon">Gabon</option>';
+            NAME_options_str  += '<option value="Gambia">Gambia</option>';
+            NAME_options_str  += '<option value="Georgia">Georgia</option>';
+            NAME_options_str  += '<option value="Germany">Germany</option>';
+            NAME_options_str  += '<option value="Ghana">Ghana</option>';
+            NAME_options_str  += '<option value="Gibraltar">Gibraltar</option>';
+            NAME_options_str  += '<option value="Greece">Greece</option>';
+            NAME_options_str  += '<option value="Greenland">Greenland</option>';
+            NAME_options_str  += '<option value="Grenada">Grenada</option>';
+            NAME_options_str  += '<option value="Guam">Guam</option>';
+            NAME_options_str  += '<option value="Guatemala">Guatemala</option>';
+            NAME_options_str  += '<option value="Guernsey">Guernsey</option>';
+            NAME_options_str  += '<option value="Guinea">Guinea</option>';
+            NAME_options_str  += '<option value="Guinea-Bissau">Guinea-Bissau</option>';
+            NAME_options_str  += '<option value="Guyana">Guyana</option>';
+            NAME_options_str  += '<option value="Haiti">Haiti</option>';
+            NAME_options_str  += '<option value="Heard I. and McDonald Is.">Heard I. and McDonald Is.</option>';
+            NAME_options_str  += '<option value="Honduras">Honduras</option>';
+            NAME_options_str  += '<option value="Hong Kong">Hong Kong</option>';
+            NAME_options_str  += '<option value="Hungary">Hungary</option>';
+            NAME_options_str  += '<option value="Iceland">Iceland</option>';
+            NAME_options_str  += '<option value="India">India</option>';
+            NAME_options_str  += '<option value="Indonesia">Indonesia</option>';
+            NAME_options_str  += '<option value="Iran">Iran</option>';
+            NAME_options_str  += '<option value="Iraq">Iraq</option>';
+            NAME_options_str  += '<option value="Ireland">Ireland</option>';
+            NAME_options_str  += '<option value="Isle of Man">Isle of Man</option>';
+            NAME_options_str  += '<option value="Israel">Israel</option>';
+            NAME_options_str  += '<option value="Italy">Italy</option>';
+            NAME_options_str  += '<option value="Jamaica">Jamaica</option>';
+            NAME_options_str  += '<option value="Japan">Japan</option>';
+            NAME_options_str  += '<option value="Jersey">Jersey</option>';
+            NAME_options_str  += '<option value="Jordan">Jordan</option>';
+            NAME_options_str  += '<option value="Kazakhstan">Kazakhstan</option>';
+            NAME_options_str  += '<option value="Kenya">Kenya</option>';
+            NAME_options_str  += '<option value="Kiribati">Kiribati</option>';
+            NAME_options_str  += '<option value="Kosovo">Kosovo</option>';
+            NAME_options_str  += '<option value="Kuwait">Kuwait</option>';
+            NAME_options_str  += '<option value="Kyrgyzstan">Kyrgyzstan</option>';
+            NAME_options_str  += '<option value="Laos">Laos</option>';
+            NAME_options_str  += '<option value="Latvia">Latvia</option>';
+            NAME_options_str  += '<option value="Lebanon">Lebanon</option>';
+            NAME_options_str  += '<option value="Lesotho">Lesotho</option>';
+            NAME_options_str  += '<option value="Liberia">Liberia</option>';
+            NAME_options_str  += '<option value="Libya">Libya</option>';
+            NAME_options_str  += '<option value="Liechtenstein">Liechtenstein</option>';
+            NAME_options_str  += '<option value="Lithuania">Lithuania</option>';
+            NAME_options_str  += '<option value="Luxembourg">Luxembourg</option>';
+            NAME_options_str  += '<option value="Macao">Macao</option>';
+            NAME_options_str  += '<option value="Macedonia">Macedonia</option>';
+            NAME_options_str  += '<option value="Madagascar">Madagascar</option>';
+            NAME_options_str  += '<option value="Malawi">Malawi</option>';
+            NAME_options_str  += '<option value="Malaysia">Malaysia</option>';
+            NAME_options_str  += '<option value="Maldives">Maldives</option>';
+            NAME_options_str  += '<option value="Mali">Mali</option>';
+            NAME_options_str  += '<option value="Malta">Malta</option>';
+            NAME_options_str  += '<option value="Marshall Is.">Marshall Is.</option>';
+            NAME_options_str  += '<option value="Mauritania">Mauritania</option>';
+            NAME_options_str  += '<option value="Mauritius">Mauritius</option>';
+            NAME_options_str  += '<option value="Mexico">Mexico</option>';
+            NAME_options_str  += '<option value="Micronesia">Micronesia</option>';
+            NAME_options_str  += '<option value="Moldova">Moldova</option>';
+            NAME_options_str  += '<option value="Monaco">Monaco</option>';
+            NAME_options_str  += '<option value="Mongolia">Mongolia</option>';
+            NAME_options_str  += '<option value="Montenegro">Montenegro</option>';
+            NAME_options_str  += '<option value="Montserrat">Montserrat</option>';
+            NAME_options_str  += '<option value="Morocco">Morocco</option>';
+            NAME_options_str  += '<option value="Mozambique">Mozambique</option>';
+            NAME_options_str  += '<option value="Myanmar">Myanmar</option>';
+            NAME_options_str  += '<option value="N. Mariana Is.">N. Mariana Is.</option>';
+            NAME_options_str  += '<option value="Namibia">Namibia</option>';
+            NAME_options_str  += '<option value="Nauru">Nauru</option>';
+            NAME_options_str  += '<option value="Nepal">Nepal</option>';
+            NAME_options_str  += '<option value="Netherlands">Netherlands</option>';
+            NAME_options_str  += '<option value="New Caledonia">New Caledonia</option>';
+            NAME_options_str  += '<option value="New Zealand">New Zealand</option>';
+            NAME_options_str  += '<option value="Nicaragua">Nicaragua</option>';
+            NAME_options_str  += '<option value="Niger">Niger</option>';
+            NAME_options_str  += '<option value="Nigeria">Nigeria</option>';
+            NAME_options_str  += '<option value="Niue">Niue</option>';
+            NAME_options_str  += '<option value="Norfolk Island">Norfolk Island</option>';
+            NAME_options_str  += '<option value="North Korea">North Korea</option>';
+            NAME_options_str  += '<option value="Norway">Norway</option>';
+            NAME_options_str  += '<option value="Oman">Oman</option>';
+            NAME_options_str  += '<option value="Pakistan">Pakistan</option>';
+            NAME_options_str  += '<option value="Palau">Palau</option>';
+            NAME_options_str  += '<option value="Palestine">Palestine</option>';
+            NAME_options_str  += '<option value="Panama">Panama</option>';
+            NAME_options_str  += '<option value="Papua New Guinea">Papua New Guinea</option>';
+            NAME_options_str  += '<option value="Paraguay">Paraguay</option>';
+            NAME_options_str  += '<option value="Peru">Peru</option>';
+            NAME_options_str  += '<option value="Philippines">Philippines</option>';
+            NAME_options_str  += '<option value="Pitcairn Is.">Pitcairn Is.</option>';
+            NAME_options_str  += '<option value="Poland">Poland</option>';
+            NAME_options_str  += '<option value="Portugal">Portugal</option>';
+            NAME_options_str  += '<option value="Puerto Rico">Puerto Rico</option>';
+            NAME_options_str  += '<option value="Qatar">Qatar</option>';
+            NAME_options_str  += '<option value="Romania">Romania</option>';
+            NAME_options_str  += '<option value="Russia">Russia</option>';
+            NAME_options_str  += '<option value="Rwanda">Rwanda</option>';
+            NAME_options_str  += '<option value="S. Geo. and the Is.">S. Geo. and the Is.</option>';
+            NAME_options_str  += '<option value="S. Sudan">S. Sudan</option>';
+            NAME_options_str  += '<option value="Saint Helena">Saint Helena</option>';
+            NAME_options_str  += '<option value="Saint Lucia">Saint Lucia</option>';
+            NAME_options_str  += '<option value="Samoa">Samoa</option>';
+            NAME_options_str  += '<option value="San Marino">San Marino</option>';
+            NAME_options_str  += '<option value="Saudi Arabia">Saudi Arabia</option>';
+            NAME_options_str  += '<option value="Senegal">Senegal</option>';
+            NAME_options_str  += '<option value="Serbia">Serbia</option>';
+            NAME_options_str  += '<option value="Seychelles">Seychelles</option>';
+            NAME_options_str  += '<option value="Sierra Leone">Sierra Leone</option>';
+            NAME_options_str  += '<option value="Singapore">Singapore</option>';
+            NAME_options_str  += '<option value="Sint Maarten">Sint Maarten</option>';
+            NAME_options_str  += '<option value="Slovakia">Slovakia</option>';
+            NAME_options_str  += '<option value="Slovenia">Slovenia</option>';
+            NAME_options_str  += '<option value="Solomon Is.">Solomon Is.</option>';
+            NAME_options_str  += '<option value="Somalia">Somalia</option>';
+            NAME_options_str  += '<option value="South Africa">South Africa</option>';
+            NAME_options_str  += '<option value="South Korea">South Korea</option>';
+            NAME_options_str  += '<option value="Spain">Spain</option>';
+            NAME_options_str  += '<option value="Sri Lanka">Sri Lanka</option>';
+            NAME_options_str  += '<option value="St-Barthélemy">St-Barthélemy</option>';
+            NAME_options_str  += '<option value="St-Martin">St-Martin</option>';
+            NAME_options_str  += '<option value="St. Kitts and Nevis">St. Kitts and Nevis</option>';
+            NAME_options_str  += '<option value="St. Pierre and Miquelon">St. Pierre and Miquelon</option>';
+            NAME_options_str  += '<option value="St. Vin. and Gren.">St. Vin. and Gren.</option>';
+            NAME_options_str  += '<option value="Sudan">Sudan</option>';
+            NAME_options_str  += '<option value="Suriname">Suriname</option>';
+            NAME_options_str  += '<option value="Sweden">Sweden</option>';
+            NAME_options_str  += '<option value="Switzerland">Switzerland</option>';
+            NAME_options_str  += '<option value="Syria">Syria</option>';
+            NAME_options_str  += '<option value="São Tomé and Principe">São Tomé and Principe</option>';
+            NAME_options_str  += '<option value="Taiwan">Taiwan</option>';
+            NAME_options_str  += '<option value="Tajikistan">Tajikistan</option>';
+            NAME_options_str  += '<option value="Tanzania">Tanzania</option>';
+            NAME_options_str  += '<option value="Thailand">Thailand</option>';
+            NAME_options_str  += '<option value="Timor-Leste">Timor-Leste</option>';
+            NAME_options_str  += '<option value="Togo">Togo</option>';
+            NAME_options_str  += '<option value="Tonga">Tonga</option>';
+            NAME_options_str  += '<option value="Trinidad and Tobago">Trinidad and Tobago</option>';
+            NAME_options_str  += '<option value="Tunisia">Tunisia</option>';
+            NAME_options_str  += '<option value="Turkey">Turkey</option>';
+            NAME_options_str  += '<option value="Turkmenistan">Turkmenistan</option>';
+            NAME_options_str  += '<option value="Turks and Caicos Is.">Turks and Caicos Is.</option>';
+            NAME_options_str  += '<option value="Tuvalu">Tuvalu</option>';
+            NAME_options_str  += '<option value="U.S. Minor Outlying Is.">U.S. Minor Outlying Is.</option>';
+            NAME_options_str  += '<option value="U.S. Virgin Is.">U.S. Virgin Is.</option>';
+            NAME_options_str  += '<option value="Uganda">Uganda</option>';
+            NAME_options_str  += '<option value="Ukraine">Ukraine</option>';
+            NAME_options_str  += '<option value="United Arab Emirates">United Arab Emirates</option>';
+            NAME_options_str  += '<option value="United Kingdom">United Kingdom</option>';
+            NAME_options_str  += '<option value="United States of America">United States of America</option>';
+            NAME_options_str  += '<option value="Uruguay">Uruguay</option>';
+            NAME_options_str  += '<option value="Uzbekistan">Uzbekistan</option>';
+            NAME_options_str  += '<option value="Vanuatu">Vanuatu</option>';
+            NAME_options_str  += '<option value="Venezuela">Venezuela</option>';
+            NAME_options_str  += '<option value="Vietnam">Vietnam</option>';
+            NAME_options_str  += '<option value="W. Sahara">W. Sahara</option>';
+            NAME_options_str  += '<option value="Wallis and Futuna Is.">Wallis and Futuna Is.</option>';
+            NAME_options_str  += '<option value="Yemen">Yemen</option>';
+            NAME_options_str  += '<option value="Zambia">Zambia</option>';
+            NAME_options_str  += '<option value="Zimbabwe">Zimbabwe</option>';
+            NAME_options_str  += '<option value="eSwatini">eSwatini</option>';
+            NAME_options_str  += '<option value="Åland">Åland</option>';
+            sel_NAME.innerHTML = NAME_options_str;
+            div_NAME.appendChild(sel_NAME);
+            var lab_NAME = document.createElement('div');
+            lab_NAME.innerHTML = 'NAME';
+            lab_NAME.className = 'filterlabel';
+            div_NAME.appendChild(lab_NAME);
+            var reset_NAME = document.createElement('div');
+            reset_NAME.innerHTML = 'clear filter';
+            reset_NAME.className = 'filterlabel';
+            reset_NAME.onclick = function() {
+                var options = document.getElementById("sel_NAME").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_NAME.appendChild(reset_NAME);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_FIPS_10_ = document.createElement('div');
+            div_FIPS_10_.id = "div_FIPS_10_";
+            div_FIPS_10_.className= "filterselect";
+            document.getElementById("menu").appendChild(div_FIPS_10_);
+            sel_FIPS_10_ = document.createElement('select');
+            sel_FIPS_10_.multiple = true;
+            sel_FIPS_10_.size = 10;
+            sel_FIPS_10_.id = "sel_FIPS_10_";
+            var FIPS_10__options_str = "<option value='' unselected></option>";
+            sel_FIPS_10_.onchange = function(){filterFunc()};
+            FIPS_10__options_str  += '<option value="NULL">NULL</option>';
+            FIPS_10__options_str  += '<option value="-99">-99</option>';
+            FIPS_10__options_str  += '<option value="AA">AA</option>';
+            FIPS_10__options_str  += '<option value="AC">AC</option>';
+            FIPS_10__options_str  += '<option value="AE">AE</option>';
+            FIPS_10__options_str  += '<option value="AF">AF</option>';
+            FIPS_10__options_str  += '<option value="AG">AG</option>';
+            FIPS_10__options_str  += '<option value="AJ">AJ</option>';
+            FIPS_10__options_str  += '<option value="AL">AL</option>';
+            FIPS_10__options_str  += '<option value="AM">AM</option>';
+            FIPS_10__options_str  += '<option value="AN">AN</option>';
+            FIPS_10__options_str  += '<option value="AO">AO</option>';
+            FIPS_10__options_str  += '<option value="AQ">AQ</option>';
+            FIPS_10__options_str  += '<option value="AR">AR</option>';
+            FIPS_10__options_str  += '<option value="AS">AS</option>';
+            FIPS_10__options_str  += '<option value="AU">AU</option>';
+            FIPS_10__options_str  += '<option value="AV">AV</option>';
+            FIPS_10__options_str  += '<option value="AY">AY</option>';
+            FIPS_10__options_str  += '<option value="BA">BA</option>';
+            FIPS_10__options_str  += '<option value="BB">BB</option>';
+            FIPS_10__options_str  += '<option value="BC">BC</option>';
+            FIPS_10__options_str  += '<option value="BD">BD</option>';
+            FIPS_10__options_str  += '<option value="BE">BE</option>';
+            FIPS_10__options_str  += '<option value="BF">BF</option>';
+            FIPS_10__options_str  += '<option value="BG">BG</option>';
+            FIPS_10__options_str  += '<option value="BH">BH</option>';
+            FIPS_10__options_str  += '<option value="BK">BK</option>';
+            FIPS_10__options_str  += '<option value="BL">BL</option>';
+            FIPS_10__options_str  += '<option value="BM">BM</option>';
+            FIPS_10__options_str  += '<option value="BN">BN</option>';
+            FIPS_10__options_str  += '<option value="BO">BO</option>';
+            FIPS_10__options_str  += '<option value="BP">BP</option>';
+            FIPS_10__options_str  += '<option value="BR">BR</option>';
+            FIPS_10__options_str  += '<option value="BT">BT</option>';
+            FIPS_10__options_str  += '<option value="BU">BU</option>';
+            FIPS_10__options_str  += '<option value="BX">BX</option>';
+            FIPS_10__options_str  += '<option value="BY">BY</option>';
+            FIPS_10__options_str  += '<option value="CA">CA</option>';
+            FIPS_10__options_str  += '<option value="CB">CB</option>';
+            FIPS_10__options_str  += '<option value="CD">CD</option>';
+            FIPS_10__options_str  += '<option value="CE">CE</option>';
+            FIPS_10__options_str  += '<option value="CF">CF</option>';
+            FIPS_10__options_str  += '<option value="CG">CG</option>';
+            FIPS_10__options_str  += '<option value="CH">CH</option>';
+            FIPS_10__options_str  += '<option value="CI">CI</option>';
+            FIPS_10__options_str  += '<option value="CJ">CJ</option>';
+            FIPS_10__options_str  += '<option value="CM">CM</option>';
+            FIPS_10__options_str  += '<option value="CN">CN</option>';
+            FIPS_10__options_str  += '<option value="CO">CO</option>';
+            FIPS_10__options_str  += '<option value="CQ">CQ</option>';
+            FIPS_10__options_str  += '<option value="CS">CS</option>';
+            FIPS_10__options_str  += '<option value="CT">CT</option>';
+            FIPS_10__options_str  += '<option value="CU">CU</option>';
+            FIPS_10__options_str  += '<option value="CV">CV</option>';
+            FIPS_10__options_str  += '<option value="CW">CW</option>';
+            FIPS_10__options_str  += '<option value="CY">CY</option>';
+            FIPS_10__options_str  += '<option value="DA">DA</option>';
+            FIPS_10__options_str  += '<option value="DJ">DJ</option>';
+            FIPS_10__options_str  += '<option value="DO">DO</option>';
+            FIPS_10__options_str  += '<option value="DR">DR</option>';
+            FIPS_10__options_str  += '<option value="EC">EC</option>';
+            FIPS_10__options_str  += '<option value="EG">EG</option>';
+            FIPS_10__options_str  += '<option value="EI">EI</option>';
+            FIPS_10__options_str  += '<option value="EK">EK</option>';
+            FIPS_10__options_str  += '<option value="EN">EN</option>';
+            FIPS_10__options_str  += '<option value="ER">ER</option>';
+            FIPS_10__options_str  += '<option value="ES">ES</option>';
+            FIPS_10__options_str  += '<option value="ET">ET</option>';
+            FIPS_10__options_str  += '<option value="EZ">EZ</option>';
+            FIPS_10__options_str  += '<option value="FI">FI</option>';
+            FIPS_10__options_str  += '<option value="FJ">FJ</option>';
+            FIPS_10__options_str  += '<option value="FK">FK</option>';
+            FIPS_10__options_str  += '<option value="FM">FM</option>';
+            FIPS_10__options_str  += '<option value="FO">FO</option>';
+            FIPS_10__options_str  += '<option value="FP">FP</option>';
+            FIPS_10__options_str  += '<option value="FR">FR</option>';
+            FIPS_10__options_str  += '<option value="FS">FS</option>';
+            FIPS_10__options_str  += '<option value="GA">GA</option>';
+            FIPS_10__options_str  += '<option value="GB">GB</option>';
+            FIPS_10__options_str  += '<option value="GG">GG</option>';
+            FIPS_10__options_str  += '<option value="GH">GH</option>';
+            FIPS_10__options_str  += '<option value="GI">GI</option>';
+            FIPS_10__options_str  += '<option value="GJ">GJ</option>';
+            FIPS_10__options_str  += '<option value="GK">GK</option>';
+            FIPS_10__options_str  += '<option value="GL">GL</option>';
+            FIPS_10__options_str  += '<option value="GM">GM</option>';
+            FIPS_10__options_str  += '<option value="GQ">GQ</option>';
+            FIPS_10__options_str  += '<option value="GR">GR</option>';
+            FIPS_10__options_str  += '<option value="GT">GT</option>';
+            FIPS_10__options_str  += '<option value="GV">GV</option>';
+            FIPS_10__options_str  += '<option value="GY">GY</option>';
+            FIPS_10__options_str  += '<option value="HA">HA</option>';
+            FIPS_10__options_str  += '<option value="HK">HK</option>';
+            FIPS_10__options_str  += '<option value="HM">HM</option>';
+            FIPS_10__options_str  += '<option value="HO">HO</option>';
+            FIPS_10__options_str  += '<option value="HR">HR</option>';
+            FIPS_10__options_str  += '<option value="HU">HU</option>';
+            FIPS_10__options_str  += '<option value="IC">IC</option>';
+            FIPS_10__options_str  += '<option value="ID">ID</option>';
+            FIPS_10__options_str  += '<option value="IM">IM</option>';
+            FIPS_10__options_str  += '<option value="IN">IN</option>';
+            FIPS_10__options_str  += '<option value="IO">IO</option>';
+            FIPS_10__options_str  += '<option value="IR">IR</option>';
+            FIPS_10__options_str  += '<option value="IT">IT</option>';
+            FIPS_10__options_str  += '<option value="IV">IV</option>';
+            FIPS_10__options_str  += '<option value="IZ">IZ</option>';
+            FIPS_10__options_str  += '<option value="JA">JA</option>';
+            FIPS_10__options_str  += '<option value="JE">JE</option>';
+            FIPS_10__options_str  += '<option value="JM">JM</option>';
+            FIPS_10__options_str  += '<option value="JO">JO</option>';
+            FIPS_10__options_str  += '<option value="KE">KE</option>';
+            FIPS_10__options_str  += '<option value="KG">KG</option>';
+            FIPS_10__options_str  += '<option value="KN">KN</option>';
+            FIPS_10__options_str  += '<option value="KR">KR</option>';
+            FIPS_10__options_str  += '<option value="KS">KS</option>';
+            FIPS_10__options_str  += '<option value="KU">KU</option>';
+            FIPS_10__options_str  += '<option value="KV">KV</option>';
+            FIPS_10__options_str  += '<option value="KZ">KZ</option>';
+            FIPS_10__options_str  += '<option value="LA">LA</option>';
+            FIPS_10__options_str  += '<option value="LE">LE</option>';
+            FIPS_10__options_str  += '<option value="LG">LG</option>';
+            FIPS_10__options_str  += '<option value="LH">LH</option>';
+            FIPS_10__options_str  += '<option value="LI">LI</option>';
+            FIPS_10__options_str  += '<option value="LO">LO</option>';
+            FIPS_10__options_str  += '<option value="LS">LS</option>';
+            FIPS_10__options_str  += '<option value="LT">LT</option>';
+            FIPS_10__options_str  += '<option value="LU">LU</option>';
+            FIPS_10__options_str  += '<option value="LY">LY</option>';
+            FIPS_10__options_str  += '<option value="MA">MA</option>';
+            FIPS_10__options_str  += '<option value="MC">MC</option>';
+            FIPS_10__options_str  += '<option value="MD">MD</option>';
+            FIPS_10__options_str  += '<option value="MG">MG</option>';
+            FIPS_10__options_str  += '<option value="MH">MH</option>';
+            FIPS_10__options_str  += '<option value="MI">MI</option>';
+            FIPS_10__options_str  += '<option value="MJ">MJ</option>';
+            FIPS_10__options_str  += '<option value="MK">MK</option>';
+            FIPS_10__options_str  += '<option value="ML">ML</option>';
+            FIPS_10__options_str  += '<option value="MN">MN</option>';
+            FIPS_10__options_str  += '<option value="MO">MO</option>';
+            FIPS_10__options_str  += '<option value="MP">MP</option>';
+            FIPS_10__options_str  += '<option value="MR">MR</option>';
+            FIPS_10__options_str  += '<option value="MT">MT</option>';
+            FIPS_10__options_str  += '<option value="MU">MU</option>';
+            FIPS_10__options_str  += '<option value="MV">MV</option>';
+            FIPS_10__options_str  += '<option value="MX">MX</option>';
+            FIPS_10__options_str  += '<option value="MY">MY</option>';
+            FIPS_10__options_str  += '<option value="MZ">MZ</option>';
+            FIPS_10__options_str  += '<option value="NC">NC</option>';
+            FIPS_10__options_str  += '<option value="NE">NE</option>';
+            FIPS_10__options_str  += '<option value="NF">NF</option>';
+            FIPS_10__options_str  += '<option value="NG">NG</option>';
+            FIPS_10__options_str  += '<option value="NH">NH</option>';
+            FIPS_10__options_str  += '<option value="NI">NI</option>';
+            FIPS_10__options_str  += '<option value="NL">NL</option>';
+            FIPS_10__options_str  += '<option value="NO">NO</option>';
+            FIPS_10__options_str  += '<option value="NP">NP</option>';
+            FIPS_10__options_str  += '<option value="NR">NR</option>';
+            FIPS_10__options_str  += '<option value="NS">NS</option>';
+            FIPS_10__options_str  += '<option value="NT">NT</option>';
+            FIPS_10__options_str  += '<option value="NU">NU</option>';
+            FIPS_10__options_str  += '<option value="NZ">NZ</option>';
+            FIPS_10__options_str  += '<option value="PA">PA</option>';
+            FIPS_10__options_str  += '<option value="PC">PC</option>';
+            FIPS_10__options_str  += '<option value="PE">PE</option>';
+            FIPS_10__options_str  += '<option value="PK">PK</option>';
+            FIPS_10__options_str  += '<option value="PL">PL</option>';
+            FIPS_10__options_str  += '<option value="PM">PM</option>';
+            FIPS_10__options_str  += '<option value="PO">PO</option>';
+            FIPS_10__options_str  += '<option value="PP">PP</option>';
+            FIPS_10__options_str  += '<option value="PS">PS</option>';
+            FIPS_10__options_str  += '<option value="PU">PU</option>';
+            FIPS_10__options_str  += '<option value="QA">QA</option>';
+            FIPS_10__options_str  += '<option value="RI">RI</option>';
+            FIPS_10__options_str  += '<option value="RM">RM</option>';
+            FIPS_10__options_str  += '<option value="RN">RN</option>';
+            FIPS_10__options_str  += '<option value="RO">RO</option>';
+            FIPS_10__options_str  += '<option value="RP">RP</option>';
+            FIPS_10__options_str  += '<option value="RQ">RQ</option>';
+            FIPS_10__options_str  += '<option value="RS">RS</option>';
+            FIPS_10__options_str  += '<option value="RW">RW</option>';
+            FIPS_10__options_str  += '<option value="SA">SA</option>';
+            FIPS_10__options_str  += '<option value="SB">SB</option>';
+            FIPS_10__options_str  += '<option value="SC">SC</option>';
+            FIPS_10__options_str  += '<option value="SE">SE</option>';
+            FIPS_10__options_str  += '<option value="SF">SF</option>';
+            FIPS_10__options_str  += '<option value="SG">SG</option>';
+            FIPS_10__options_str  += '<option value="SH">SH</option>';
+            FIPS_10__options_str  += '<option value="SI">SI</option>';
+            FIPS_10__options_str  += '<option value="SL">SL</option>';
+            FIPS_10__options_str  += '<option value="SM">SM</option>';
+            FIPS_10__options_str  += '<option value="SN">SN</option>';
+            FIPS_10__options_str  += '<option value="SO">SO</option>';
+            FIPS_10__options_str  += '<option value="SP">SP</option>';
+            FIPS_10__options_str  += '<option value="ST">ST</option>';
+            FIPS_10__options_str  += '<option value="SU">SU</option>';
+            FIPS_10__options_str  += '<option value="SW">SW</option>';
+            FIPS_10__options_str  += '<option value="SX">SX</option>';
+            FIPS_10__options_str  += '<option value="SY">SY</option>';
+            FIPS_10__options_str  += '<option value="SZ">SZ</option>';
+            FIPS_10__options_str  += '<option value="TB">TB</option>';
+            FIPS_10__options_str  += '<option value="TD">TD</option>';
+            FIPS_10__options_str  += '<option value="TH">TH</option>';
+            FIPS_10__options_str  += '<option value="TI">TI</option>';
+            FIPS_10__options_str  += '<option value="TK">TK</option>';
+            FIPS_10__options_str  += '<option value="TN">TN</option>';
+            FIPS_10__options_str  += '<option value="TO">TO</option>';
+            FIPS_10__options_str  += '<option value="TP">TP</option>';
+            FIPS_10__options_str  += '<option value="TS">TS</option>';
+            FIPS_10__options_str  += '<option value="TT">TT</option>';
+            FIPS_10__options_str  += '<option value="TU">TU</option>';
+            FIPS_10__options_str  += '<option value="TV">TV</option>';
+            FIPS_10__options_str  += '<option value="TW">TW</option>';
+            FIPS_10__options_str  += '<option value="TX">TX</option>';
+            FIPS_10__options_str  += '<option value="TZ">TZ</option>';
+            FIPS_10__options_str  += '<option value="UG">UG</option>';
+            FIPS_10__options_str  += '<option value="UK">UK</option>';
+            FIPS_10__options_str  += '<option value="UP">UP</option>';
+            FIPS_10__options_str  += '<option value="US">US</option>';
+            FIPS_10__options_str  += '<option value="UV">UV</option>';
+            FIPS_10__options_str  += '<option value="UY">UY</option>';
+            FIPS_10__options_str  += '<option value="UZ">UZ</option>';
+            FIPS_10__options_str  += '<option value="VC">VC</option>';
+            FIPS_10__options_str  += '<option value="VE">VE</option>';
+            FIPS_10__options_str  += '<option value="VI">VI</option>';
+            FIPS_10__options_str  += '<option value="VM">VM</option>';
+            FIPS_10__options_str  += '<option value="VQ">VQ</option>';
+            FIPS_10__options_str  += '<option value="WA">WA</option>';
+            FIPS_10__options_str  += '<option value="WF">WF</option>';
+            FIPS_10__options_str  += '<option value="WI">WI</option>';
+            FIPS_10__options_str  += '<option value="WS">WS</option>';
+            FIPS_10__options_str  += '<option value="WZ">WZ</option>';
+            FIPS_10__options_str  += '<option value="YM">YM</option>';
+            FIPS_10__options_str  += '<option value="ZA">ZA</option>';
+            FIPS_10__options_str  += '<option value="ZI">ZI</option>';
+            sel_FIPS_10_.innerHTML = FIPS_10__options_str;
+            div_FIPS_10_.appendChild(sel_FIPS_10_);
+            var lab_FIPS_10_ = document.createElement('div');
+            lab_FIPS_10_.innerHTML = 'FIPS_10_';
+            lab_FIPS_10_.className = 'filterlabel';
+            div_FIPS_10_.appendChild(lab_FIPS_10_);
+            var reset_FIPS_10_ = document.createElement('div');
+            reset_FIPS_10_.innerHTML = 'clear filter';
+            reset_FIPS_10_.className = 'filterlabel';
+            reset_FIPS_10_.onclick = function() {
+                var options = document.getElementById("sel_FIPS_10_").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_FIPS_10_.appendChild(reset_FIPS_10_);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_name = document.createElement('div');
+            div_name.id = "div_name";
+            div_name.className= "filterselect";
+            document.getElementById("menu").appendChild(div_name);
+            sel_name = document.createElement('select');
+            sel_name.multiple = true;
+            sel_name.size = 10;
+            sel_name.id = "sel_name";
+            var name_options_str = "<option value='' unselected></option>";
+            sel_name.onchange = function(){filterFunc()};
+            name_options_str  += '<option value="Azad Nagar Naka">Azad Nagar Naka</option>';
+            name_options_str  += '<option value="Balaji Nagar">Balaji Nagar</option>';
+            name_options_str  += '<option value="Batata Company">Batata Company</option>';
+            name_options_str  += '<option value="Bebrli Park">Bebrli Park</option>';
+            name_options_str  += '<option value="Bhaindar Pada">Bhaindar Pada</option>';
+            name_options_str  += '<option value="Bhayandar Bus Station">Bhayandar Bus Station</option>';
+            name_options_str  += '<option value="Bhayandar Police Station">Bhayandar Police Station</option>';
+            name_options_str  += '<option value="Bhayandar Station (W) Chowk / Uttan Naka">Bhayandar Station (W) Chowk / Uttan Naka</option>';
+            name_options_str  += '<option value="Bombay Market">Bombay Market</option>';
+            name_options_str  += '<option value="Brahmand Signal">Brahmand Signal</option>';
+            name_options_str  += '<option value="Cadbury Junction">Cadbury Junction</option>';
+            name_options_str  += '<option value="Chaitanya Hospital">Chaitanya Hospital</option>';
+            name_options_str  += '<option value="Chena Bridge">Chena Bridge</option>';
+            name_options_str  += '<option value="Cocacola Company">Cocacola Company</option>';
+            name_options_str  += '<option value="Cross Garden">Cross Garden</option>';
+            name_options_str  += '<option value="Dnyanasadhana College">Dnyanasadhana College</option>';
+            name_options_str  += '<option value="Dongri Pada">Dongri Pada</option>';
+            name_options_str  += '<option value="Flower Valley">Flower Valley</option>';
+            name_options_str  += '<option value="Fountain Hotel / Varsova Bridge">Fountain Hotel / Varsova Bridge</option>';
+            name_options_str  += '<option value="Gaimukh">Gaimukh</option>';
+            name_options_str  += '<option value="Gaimukh Jakat Naka">Gaimukh Jakat Naka</option>';
+            name_options_str  += '<option value="Ghodbunder Village">Ghodbunder Village</option>';
+            name_options_str  += '<option value="Ghodbunder Village Junction">Ghodbunder Village Junction</option>';
+            name_options_str  += '<option value="Godbandar">Godbandar</option>';
+            name_options_str  += '<option value="Gokul Nagar Thane West">Gokul Nagar Thane West</option>';
+            name_options_str  += '<option value="Green Park / Pleasant Park">Green Park / Pleasant Park</option>';
+            name_options_str  += '<option value="Hitko Company">Hitko Company</option>';
+            name_options_str  += '<option value="Hitko Company / Hatkesh">Hitko Company / Hatkesh</option>';
+            name_options_str  += '<option value="Imperial Square">Imperial Square</option>';
+            name_options_str  += '<option value="Jagannath Mahadev Temple">Jagannath Mahadev Temple</option>';
+            name_options_str  += '<option value="Jain Mandir">Jain Mandir</option>';
+            name_options_str  += '<option value="Kanchanpushpa complex Gate no 2 Thane West">Kanchanpushpa complex Gate no 2 Thane West</option>';
+            name_options_str  += '<option value="Kapurbawdi">Kapurbawdi</option>';
+            name_options_str  += '<option value="Kasarvadavali">Kasarvadavali</option>';
+            name_options_str  += '<option value="Kashi Village">Kashi Village</option>';
+            name_options_str  += '<option value="Kashimira">Kashimira</option>';
+            name_options_str  += '<option value="Kashimira (E)">Kashimira (E)</option>';
+            name_options_str  += '<option value="Late Savarkar Chowk / Golden Nest">Late Savarkar Chowk / Golden Nest</option>';
+            name_options_str  += '<option value="Lockim Company">Lockim Company</option>';
+            name_options_str  += '<option value="Lodha Complex">Lodha Complex</option>';
+            name_options_str  += '<option value="Lodha Splendora">Lodha Splendora</option>';
+            name_options_str  += '<option value="Louis Wadi">Louis Wadi</option>';
+            name_options_str  += '<option value="Majiwada Bus Stop Thane West">Majiwada Bus Stop Thane West</option>';
+            name_options_str  += '<option value="Majiwada Naka">Majiwada Naka</option>';
+            name_options_str  += '<option value="Mandali Talav">Mandali Talav</option>';
+            name_options_str  += '<option value="Manpada">Manpada</option>';
+            name_options_str  += '<option value="Manpada Flyover">Manpada Flyover</option>';
+            name_options_str  += '<option value="Maxus Mall">Maxus Mall</option>';
+            name_options_str  += '<option value="Mira Bhayandar Municipal Head Office">Mira Bhayandar Municipal Head Office</option>';
+            name_options_str  += '<option value="Muchhala College">Muchhala College</option>';
+            name_options_str  += '<option value="Muchhala Polytechnic">Muchhala Polytechnic</option>';
+            name_options_str  += '<option value="Mulla Bagh">Mulla Bagh</option>';
+            name_options_str  += '<option value="Nitin Signal Thane West">Nitin Signal Thane West</option>';
+            name_options_str  += '<option value="Ovala">Ovala</option>';
+            name_options_str  += '<option value="Patli Pada">Patli Pada</option>';
+            name_options_str  += '<option value="Patlipada Junction">Patlipada Junction</option>';
+            name_options_str  += '<option value="Punjab Foundry / Sahyadri Nagar">Punjab Foundry / Sahyadri Nagar</option>';
+            name_options_str  += '<option value="S.K. Stone">S.K. Stone</option>';
+            name_options_str  += '<option value="Sambhaji Nagar">Sambhaji Nagar</option>';
+            name_options_str  += '<option value="Savarkar Chowk / Golden Nest">Savarkar Chowk / Golden Nest</option>';
+            name_options_str  += '<option value="Shivar Garden">Shivar Garden</option>';
+            name_options_str  += '<option value="Shri Ram Hospital Thane West">Shri Ram Hospital Thane West</option>';
+            name_options_str  += '<option value="Shrinath Complex">Shrinath Complex</option>';
+            name_options_str  += '<option value="Siddharth Nagar">Siddharth Nagar</option>';
+            name_options_str  += '<option value="Siddhivinayak Tower">Siddhivinayak Tower</option>';
+            name_options_str  += '<option value="Sidheswar Talav">Sidheswar Talav</option>';
+            name_options_str  += '<option value="Silver Park">Silver Park</option>';
+            name_options_str  += '<option value="Sunder Nagar">Sunder Nagar</option>';
+            name_options_str  += '<option value="Swami Vivekanand Chowk">Swami Vivekanand Chowk</option>';
+            name_options_str  += '<option value="Tattvagyan Vidyapeeth">Tattvagyan Vidyapeeth</option>';
+            name_options_str  += '<option value="Teen Haath Naka">Teen Haath Naka</option>';
+            name_options_str  += '<option value="Teen Hath Naka">Teen Hath Naka</option>';
+            name_options_str  += '<option value="Thane Station (E)">Thane Station (E)</option>';
+            name_options_str  += '<option value="The Bishop School">The Bishop School</option>';
+            name_options_str  += '<option value="Varsova Bridge">Varsova Bridge</option>';
+            name_options_str  += '<option value="Varsova Jain Mandir">Varsova Jain Mandir</option>';
+            name_options_str  += '<option value="Vijay Garden">Vijay Garden</option>';
+            name_options_str  += '<option value="Waghbil Naka ( Non AC )">Waghbil Naka ( Non AC )</option>';
+            name_options_str  += '<option value="Western Hotel / Lakshmi Baug">Western Hotel / Lakshmi Baug</option>';
+            sel_name.innerHTML = name_options_str;
+            div_name.appendChild(sel_name);
+            var lab_name = document.createElement('div');
+            lab_name.innerHTML = 'name';
+            lab_name.className = 'filterlabel';
+            div_name.appendChild(lab_name);
+            var reset_name = document.createElement('div');
+            reset_name.innerHTML = 'clear filter';
+            reset_name.className = 'filterlabel';
+            reset_name.onclick = function() {
+                var options = document.getElementById("sel_name").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_name.appendChild(reset_name);
+        </script>
+    </body>
+</html>
